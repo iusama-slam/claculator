@@ -11,7 +11,7 @@ export function evaluate(left, operator, right) {
 }
 
 export function formatResult(value) {
-  if (!Number.isFinite(value)) return String(value)
+  if (!Number.isFinite(value)) return "Can't divide by zero"
   const rounded = Math.round(value * 1e10) / 1e10
   return String(rounded)
 }
