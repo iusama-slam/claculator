@@ -19,6 +19,29 @@ export function formatResult(value) {
 // The key pad. Nothing below runs under Node.
 
 if (typeof document !== 'undefined') {
+  // Theme: persisted in localStorage, applied on load, toggled by the button.
+  const THEME_KEY = 'calculator-theme'
+  const toggle = document.getElementById('theme-toggle')
+
+  const applyTheme = (theme) => {
+    const dark = theme === 'dark'
+    if (dark) document.documentElement.dataset.theme = 'dark'
+    else delete document.documentElement.dataset.theme
+    toggle.textContent = dark ? 'Light mode' : 'Dark mode'
+    toggle.setAttribute('aria-pressed', dark ? 'true' : 'false')
+    toggle.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme')
+  }
+
+  let theme = 'light'
+  try { theme = localStorage.getItem(THEME_KEY) === 'dark' ? 'dark' : 'light' } catch { /* storage unavailable */ }
+  applyTheme(theme)
+
+  toggle.addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark'
+    applyTheme(theme)
+    try { localStorage.setItem(THEME_KEY, theme) } catch { /* storage unavailable */ }
+  })
+
   const display = document.getElementById('display')
   let current = '0'
   let stored = null

@@ -6,7 +6,20 @@
   --text: #1c1e21;
   --muted: #6b7280;
   --accent: #2563eb;
+  --accent-hover: #1d4ed8;
   --accent-text: #ffffff;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1120;
+  --panel: #1e293b;
+  --key: #334155;
+  --key-hover: #475569;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --accent: #60a5fa;
+  --accent-hover: #93c5fd;
+  --accent-text: #0b1120;
 }
 
 * { box-sizing: border-box; }
@@ -74,4 +87,19 @@ body {
   font-weight: 600;
 }
 
-.key-equals:hover { background: #1d4ed8; }
+.key-equals:hover { background: var(--accent-hover); }
+
+.theme-toggle {
+  display: block;
+  margin: 0 0 12px auto;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--key);
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.theme-toggle:hover { background: var(--key-hover); }
