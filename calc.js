@@ -27,6 +27,54 @@ if (typeof document !== 'undefined') {
 
   const show = (text) => { display.textContent = text }
 
+  // Calculation history: in-memory list, newest first, capped at 10,
+  // persisted in localStorage so it survives a page reload.
+  const SYMBOLS = { '/': '÷', '*': '×', '-': '−', '+': '+' }
+  const HISTORY_KEY = 'calc-history'
+  const HISTORY_LIMIT = 10
+  const historyList = document.getElementById('history-list')
+  const historyEmpty = document.getElementById('history-empty')
+  const clearHistoryButton = document.getElementById('clear-history')
+
+  let history = []
+  try {
+    const saved = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]')
+    if (Array.isArray(saved)) history = saved.slice(0, HISTORY_LIMIT).map(String)
+  } catch {
+    history = []
+  }
+
+  const saveHistory = () => {
+    try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)) } catch { /* storage unavailable */ }
+  }
+
+  const renderHistory = () => {
+    historyList.replaceChildren(
+      ...history.map((entry) => {
+        const li = document.createElement('li')
+        li.textContent = entry
+        return li
+      })
+    )
+    historyEmpty.hidden = history.length > 0
+    clearHistoryButton.disabled = history.length === 0
+  }
+
+  const recordHistory = (left, op, right, result) => {
+    history.unshift(`${left} ${SYMBOLS[op] || op} ${right} = ${result}`)
+    if (history.length > HISTORY_LIMIT) history.length = HISTORY_LIMIT
+    saveHistory()
+    renderHistory()
+  }
+
+  clearHistoryButton.addEventListener('click', () => {
+    history = []
+    saveHistory()
+    renderHistory()
+  })
+
+  renderHistory()
+
   const press = (digit) => {
     if (fresh || current === '0') current = digit === '.' ? '0.' : digit
     else if (digit !== '.' || !current.includes('.')) current += digit
@@ -36,7 +84,9 @@ if (typeof document !== 'undefined') {
 
   const apply = () => {
     if (stored === null || operator === null) return
-    current = formatResult(evaluate(stored, operator, current))
+    const result = formatResult(evaluate(stored, operator, current))
+    recordHistory(stored, operator, current, result)
+    current = result
     stored = null
     operator = null
     fresh = true

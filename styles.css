@@ -21,6 +21,14 @@ body {
   color: var(--text);
 }
 
+.layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .calculator {
   width: 320px;
   padding: 20px;
@@ -75,3 +83,64 @@ body {
 }
 
 .key-equals:hover { background: #1d4ed8; }
+
+.history {
+  width: 260px;
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--panel);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.history-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.history-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.history-clear {
+  border: 0;
+  border-radius: 12px;
+  padding: 8px 14px;
+  background: var(--key);
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.history-clear:hover { background: var(--key-hover); }
+.history-clear:active { transform: translateY(1px); }
+
+.history-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.history-list li {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--key);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-empty {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}

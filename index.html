@@ -7,34 +7,44 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="calculator" aria-label="Calculator">
-    <output id="display" class="display" aria-live="polite">0</output>
-    <div class="keys">
-      <button class="key key-action" data-action="clear">C</button>
-      <button class="key key-action" data-action="sign">+/-</button>
-      <button class="key key-action" data-action="percent">%</button>
-      <button class="key key-operator" data-operator="/">÷</button>
+  <div class="layout">
+    <main class="calculator" aria-label="Calculator">
+      <output id="display" class="display" aria-live="polite">0</output>
+      <div class="keys">
+        <button class="key key-action" data-action="clear">C</button>
+        <button class="key key-action" data-action="sign">+/-</button>
+        <button class="key key-action" data-action="percent">%</button>
+        <button class="key key-operator" data-operator="/">÷</button>
 
-      <button class="key" data-digit="7">7</button>
-      <button class="key" data-digit="8">8</button>
-      <button class="key" data-digit="9">9</button>
-      <button class="key key-operator" data-operator="*">×</button>
+        <button class="key" data-digit="7">7</button>
+        <button class="key" data-digit="8">8</button>
+        <button class="key" data-digit="9">9</button>
+        <button class="key key-operator" data-operator="*">×</button>
 
-      <button class="key" data-digit="4">4</button>
-      <button class="key" data-digit="5">5</button>
-      <button class="key" data-digit="6">6</button>
-      <button class="key key-operator" data-operator="-">−</button>
+        <button class="key" data-digit="4">4</button>
+        <button class="key" data-digit="5">5</button>
+        <button class="key" data-digit="6">6</button>
+        <button class="key key-operator" data-operator="-">−</button>
 
-      <button class="key" data-digit="1">1</button>
-      <button class="key" data-digit="2">2</button>
-      <button class="key" data-digit="3">3</button>
-      <button class="key key-operator" data-operator="+">+</button>
+        <button class="key" data-digit="1">1</button>
+        <button class="key" data-digit="2">2</button>
+        <button class="key" data-digit="3">3</button>
+        <button class="key key-operator" data-operator="+">+</button>
 
-      <button class="key key-wide" data-digit="0">0</button>
-      <button class="key" data-digit=".">.</button>
-      <button class="key key-equals" data-action="equals">=</button>
-    </div>
-  </main>
+        <button class="key key-wide" data-digit="0">0</button>
+        <button class="key" data-digit=".">.</button>
+        <button class="key key-equals" data-action="equals">=</button>
+      </div>
+    </main>
+    <section class="history" aria-label="Calculation history">
+      <div class="history-head">
+        <h1 class="history-title">History</h1>
+        <button id="clear-history" class="history-clear" type="button">Clear</button>
+      </div>
+      <ol id="history-list" class="history-list" aria-live="polite"></ol>
+      <p id="history-empty" class="history-empty">No calculations yet.</p>
+    </section>
+  </div>
   <script type="module" src="calc.js"></script>
 </body>
 </html>
