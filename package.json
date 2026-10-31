@@ -1,0 +1,10 @@
+{
+  "name": "simple-calculator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A small browser calculator with no build step.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "type": "module"
+}
