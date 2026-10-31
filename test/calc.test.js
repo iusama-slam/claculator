@@ -14,6 +14,6 @@ test('results are rounded so 0.1 + 0.2 reads 0.3', () => {
   assert.equal(formatResult(10 / 4), '2.5')
 })
 
-test('dividing by zero still reads Infinity today', () => {
-  assert.equal(formatResult(evaluate('1', '/', '0')), 'Infinity')
+test('dividing by zero shows a friendly message, not Infinity', () => {
+  assert.equal(formatResult(evaluate('1', '/', '0')), "Can't divide by zero")
 })
