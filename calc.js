@@ -43,29 +43,69 @@ if (typeof document !== 'undefined') {
     show(current)
   }
 
+  const backspace = () => {
+    current = current.length > 1 ? current.slice(0, -1) : '0'
+    fresh = false
+    show(current)
+  }
+
+  // One entry point for both clicks and keyboard input.
+  const activate = ({ digit, operator: op, action }) => {
+    if (digit !== undefined) return press(digit)
+    if (op) {
+      if (stored !== null && !fresh) apply()
+      stored = current
+      operator = op
+      fresh = true
+      return
+    }
+    if (action === 'equals') return apply()
+    if (action === 'clear') {
+      current = '0'; stored = null; operator = null; fresh = true
+      return show(current)
+    }
+    if (action === 'sign') {
+      current = formatResult(-Number(current))
+      return show(current)
+    }
+    if (action === 'percent') {
+      current = formatResult(Number(current) / 100)
+      return show(current)
+    }
+    if (action === 'backspace') return backspace()
+  }
+
   document.querySelectorAll('.key').forEach((key) => {
-    key.addEventListener('click', () => {
-      if (key.dataset.digit !== undefined) return press(key.dataset.digit)
-      if (key.dataset.operator) {
-        if (stored !== null && !fresh) apply()
-        stored = current
-        operator = key.dataset.operator
-        fresh = true
-        return
-      }
-      if (key.dataset.action === 'equals') return apply()
-      if (key.dataset.action === 'clear') {
-        current = '0'; stored = null; operator = null; fresh = true
-        return show(current)
-      }
-      if (key.dataset.action === 'sign') {
-        current = formatResult(-Number(current))
-        return show(current)
-      }
-      if (key.dataset.action === 'percent') {
-        current = formatResult(Number(current) / 100)
-        return show(current)
-      }
-    })
+    key.addEventListener('click', () => activate(key.dataset))
+  })
+
+  document.addEventListener('keydown', (event) => {
+    if (event.ctrlKey || event.metaKey || event.altKey) return
+    const key = event.key
+    if (/^[0-9]$/.test(key)) {
+      event.preventDefault()
+      return activate({ digit: key })
+    }
+    if (key === '.') {
+      event.preventDefault()
+      return activate({ digit: '.' })
+    }
+    if (key === '+' || key === '-' || key === '*' || key === '/') {
+      event.preventDefault()
+      return activate({ operator: key })
+    }
+    if (key === 'Enter' || key === '=') {
+      event.preventDefault()
+      return activate({ action: 'equals' })
+    }
+    if (key === 'Backspace') {
+      event.preventDefault()
+      return activate({ action: 'backspace' })
+    }
+    if (key === 'Escape') {
+      event.preventDefault()
+      return activate({ action: 'clear' })
+    }
+    // Every other key is ignored and left to the browser.
   })
 }
