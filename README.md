@@ -1,7 +1,4 @@
-# Simple Calculator
 
-A small calculator that runs in the browser. Plain HTML, CSS and JavaScript,
-no build step: open `index.html` and it works.
 
 ## What is here
 
