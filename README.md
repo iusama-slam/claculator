@@ -23,3 +23,5 @@ npm test
 - Keyboard input is not supported; only the on-screen keys work.
 - Dividing by zero shows "Infinity" instead of a friendly message.
 - There is no history of past calculations.
+
+Branch guard test
